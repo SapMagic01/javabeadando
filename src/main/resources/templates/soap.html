@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MNB Árfolyamok (SOAP)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: inline-block; width: 150px; }
+        button { padding: 5px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        .chart-container { margin-top: 30px; }
+        .back-link { display: block; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="/" class="back-link">← Vissza a főoldalra</a>
+
+    <h1>MNB Árfolyam Lekérdezés (SOAP)</h1>
+
+    <form action="/soap/lekerdez" method="post">
+
+        <div class="form-group">
+            <label for="deviza">Deviza pár:</label>
+            <select name="deviza" id="deviza">
+                <option value="EUR" th:selected="${selectedDeviza == 'EUR'}">EUR (Euro)</option>
+                <option value="USD" th:selected="${selectedDeviza == 'USD'}">USD (Amerikai dollár)</option>
+                <option value="GBP" th:selected="${selectedDeviza == 'GBP'}">GBP (Angol font)</option>
+                <option value="CHF" th:selected="${selectedDeviza == 'CHF'}">CHF (Svájci frank)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="startDatum">Kezdő dátum:</label>
+            <input type="date" name="startDatum" id="startDatum" required th:value="${selectedStart}">
+        </div>
+
+        <div class="form-group">
+            <label for="endDatum">Befejező dátum:</label>
+            <input type="date" name="endDatum" id="endDatum" required th:value="${selectedEnd}">
+        </div>
+
+        <button type="submit">Lekérdezés és Grafikon</button>
+    </form>
+
+    <div class="chart-container" th:if="${chartLabels != null}">
+        <h2>Árfolyam Grafikon</h2>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <div th:if="${mnbAdat != null}" style="margin-top: 20px; color: gray; font-size: 0.8em;">
+        <h3>Nyers válasz az MNB-től:</h3>
+        <pre th:text="${mnbAdat}"></pre>
+    </div>
+</div>
+
+<script th:inline="javascript" th:if="${chartLabels != null}">
+    /*<![CDATA[*/
+
+    // A Controller által összerakott stringek beillesztése
+    // th:utext kell, hogy ne escape-elje az aposztrófokat
+    const labels = [ [(${chartLabels})] ];
+    const dataPoints = [ [(${chartData})] ];
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line', // Vonaldiagram [cite: 17]
+        data: {
+            labels: labels, // Dátumok
+            datasets: [{
+                label: 'Árfolyam',
+                data: dataPoints, // Értékek
+                borderWidth: 2,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: false // Ne 0-tól induljon, hogy jobban látszódjon a változás
+                }
+            }
+        }
+    });
+    /*]]>*/
+</script>
+
+</body>
+</html>
