@@ -68,6 +68,7 @@ public class MnbService {
         } catch (Exception e) {
             System.err.println("Parse hiba: " + e.getMessage());
         }
+
         return adatok;
     }
 }
