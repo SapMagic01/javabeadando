@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Forex Számlainformációk</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: 0 auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; }
+        pre { background-color: #f8f9fa; padding: 15px; border-radius: 5px; font-size: 1.1em; line-height: 1.5; }
+        .back-link { display: block; margin-bottom: 20px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="/" class="back-link">← Vissza a főoldalra</a>
+
+    <h1>Számlainformációk</h1>
+    <p>Az Oanda szerveréről letöltött adatok:</p>
+
+    <pre th:text="${accountInfo}">Betöltés...</pre>
+
+</div>
+
+</body>
+</html>

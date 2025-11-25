@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Forex Historikus Árak</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; display: inline-block; margin-right: 15px; }
+        select { padding: 5px; width: 150px; }
+        button { padding: 5px 15px; background-color: #17a2b8; color: white; border: none; cursor: pointer; }
+        pre { background-color: #f8f9fa; padding: 15px; border-radius: 5px; font-family: monospace; }
+        .back-link { display: block; margin-bottom: 20px; color: #007bff; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="/" class="back-link">← Vissza a főoldalra</a>
+
+    <h1>Historikus Árak (Múltbeli adatok)</h1>
+
+    <form action="/forex/histar" method="post">
+        <div class="form-group">
+            <label for="instrument">Instrumentum:</label><br>
+            <select name="instrument" id="instrument">
+                <option value="EUR_USD" th:selected="${selectedInstrument == 'EUR_USD'}">EUR / USD</option>
+                <option value="USD_HUF" th:selected="${selectedInstrument == 'USD_HUF'}">USD / HUF</option>
+                <option value="GBP_USD" th:selected="${selectedInstrument == 'GBP_USD'}">GBP / USD</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="granularity">Idősáv (Granularity):</label><br>
+            <select name="granularity" id="granularity">
+                <option value="D" th:selected="${selectedGranularity == 'D'}">Napos (Daily)</option>
+                <option value="H1" th:selected="${selectedGranularity == 'H1'}">1 Órás (H1)</option>
+                <option value="M15" th:selected="${selectedGranularity == 'M15'}">15 Perces (M15)</option>
+            </select>
+        </div>
+
+        <button type="submit">Lekérdezés</button>
+    </form>
+
+    <div th:if="${historia != null}" style="margin-top: 20px;">
+        <h3>Utolsó 10 gyertya adata:</h3>
+        <pre th:text="${historia}"></pre>
+    </div>
+</div>
+
+</body>
+</html>

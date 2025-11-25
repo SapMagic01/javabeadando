@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head><title>Nyitott Pozíciók</title></head>
+<body style="font-family: sans-serif; margin: 20px;">
+<a href="/">← Vissza</a>
+<h1>Nyitott Pozíciók</h1>
+
+<table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
+    <tr style="background-color: #f2f2f2;">
+        <th>Trade ID</th>
+        <th>Instrumentum</th>
+        <th>Mennyiség</th>
+        <th>Nyitó Ár</th>
+        <th>Nyitás Ideje</th>
+    </tr>
+    <tr th:each="pos : ${poziciok}">
+        <td th:text="${pos.id}">ID</td>
+        <td th:text="${pos.instrument}">EUR_USD</td>
+        <td th:text="${pos.units}">1000</td>
+        <td th:text="${pos.openPrice}">1.0500</td>
+        <td th:text="${pos.openTime}">2023...</td>
+    </tr>
+</table>
+
+<p th:if="${poziciok.empty}">Nincs nyitott pozíció.</p>
+</body>
+</html>

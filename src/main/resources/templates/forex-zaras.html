@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head><title>Pozíció Zárás</title></head>
+<body style="font-family: sans-serif; margin: 20px;">
+<a href="/">← Vissza</a>
+<h1>Pozíció Zárás</h1>
+
+<form action="/forex/zar" method="post">
+    <label>Trade ID (Azonosító):</label>
+    <input type="number" name="tradeId" placeholder="pl. 12345" required>
+    <button type="submit" style="background-color: red; color: white; padding: 5px 15px;">Zárás</button>
+</form>
+
+<p><i>Tipp: A Trade ID-t a "Forex-Poz" menüben találod meg!</i></p>
+
+<pre th:if="${eredmeny}" th:text="${eredmeny}" style="background:#eee; padding:10px; margin-top:20px;"></pre>
+</body>
+</html>

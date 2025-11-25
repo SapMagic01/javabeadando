@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head><title>Pozíció Nyitás</title></head>
+<body style="font-family: sans-serif; margin: 20px;">
+<a href="/">← Vissza</a>
+<h1>Pozíció Nyitás</h1>
+<form action="/forex/nyit" method="post">
+    <label>Instrumentum:</label>
+    <select name="instrument">
+        <option value="EUR_USD">EUR/USD</option>
+        <option value="USD_HUF">USD/HUF</option>
+    </select><br><br>
+
+    <label>Mennyiség (Egységek):</label>
+    <input type="number" name="units" value="100" required><br><br>
+
+    <button type="submit" style="background-color: green; color: white; padding: 5px 15px;">Pozíció Nyitása</button>
+</form>
+
+<pre th:if="${eredmeny}" th:text="${eredmeny}" style="background:#eee; padding:10px; margin-top:20px;"></pre>
+</body>
+</html>
