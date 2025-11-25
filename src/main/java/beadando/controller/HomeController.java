@@ -123,21 +123,41 @@ public class HomeController {
         return "forex-histar";
     }
 
-    // Forex-Nyit: Pozíció nyitás
+    // --- 4. Forex-Nyit: Pozíció nyitás ---
     @GetMapping("/forex/nyit")
     public String forexPozicioNyitas(Model model) {
         return "forex-nyitas";
     }
 
-    // Forex-Poz: Nyitott pozíciók listázása
+    @PostMapping("/forex/nyit")
+    public String forexPozicioNyitasKuldes(@RequestParam String instrument,
+                                           @RequestParam int units,
+                                           Model model) {
+        String eredmeny = oandaService.openPosition(instrument, units);
+        model.addAttribute("eredmeny", eredmeny);
+        return "forex-nyitas";
+    }
+
+    // --- 5. Forex-Poz: Nyitott pozíciók listázása ---
     @GetMapping("/forex/poziciok")
     public String forexNyitottPoziciok(Model model) {
+        // Lekérjük a listát a service-től
+        var poziciok = oandaService.getOpenPositions();
+        model.addAttribute("poziciok", poziciok);
         return "forex-poziciok";
     }
 
-    // Forex-Zár: Pozíció zárás
+    // --- 6. Forex-Zár: Pozíció zárás ---
     @GetMapping("/forex/zar")
     public String forexPozicioZaras(Model model) {
         return "forex-zaras";
     }
+
+    @PostMapping("/forex/zar")
+    public String forexPozicioZarasKuldes(@RequestParam String tradeId, Model model) {
+        String eredmeny = oandaService.closePosition(tradeId);
+        model.addAttribute("eredmeny", eredmeny);
+        return "forex-zaras";
+    }
+
 }

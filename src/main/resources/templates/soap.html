@@ -2,28 +2,17 @@
 <html lang="hu" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>MNB Árfolyamok (SOAP)</title>
+    <title>MNB Grafikon</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        body { font-family: sans-serif; margin: 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .form-group { margin-bottom: 15px; }
-        label { display: inline-block; width: 150px; }
-        button { padding: 5px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
-        .chart-container { margin-top: 30px; }
-        .back-link { display: block; margin-bottom: 20px; }
-    </style>
 </head>
 <body>
 
-<div class="container">
-    <a href="/" class="back-link">← Vissza a főoldalra</a>
+<div th:replace="~{nav :: navbar}"></div>
 
-    <h1>MNB Árfolyam Lekérdezés (SOAP)</h1>
+<div class="main-content">
+    <h1>📈 MNB Árfolyam Lekérdezés (SOAP)</h1>
 
     <form action="/soap/lekerdez" method="post">
-
         <div class="form-group">
             <label for="deviza">Deviza pár:</label>
             <select name="deviza" id="deviza">
@@ -40,52 +29,42 @@
         </div>
 
         <div class="form-group">
-            <label for="endDatum">Befejező dátum:</label>
+            <label for="endDatum">Vége dátum:</label>
             <input type="date" name="endDatum" id="endDatum" required th:value="${selectedEnd}">
         </div>
 
-        <button type="submit">Lekérdezés és Grafikon</button>
+        <button type="submit">Grafikon Rajzolása</button>
     </form>
 
-    <div class="chart-container" th:if="${chartLabels != null}">
+    <div th:if="${chartLabels != null}" style="margin-top: 40px;">
         <h2>Árfolyam Grafikon</h2>
         <canvas id="myChart"></canvas>
-    </div>
-
-    <div th:if="${mnbAdat != null}" style="margin-top: 20px; color: gray; font-size: 0.8em;">
-        <h3>Nyers válasz az MNB-től:</h3>
-        <pre th:text="${mnbAdat}"></pre>
     </div>
 </div>
 
 <script th:inline="javascript" th:if="${chartLabels != null}">
     /*<![CDATA[*/
-
-    // A Controller által összerakott stringek beillesztése
-    // th:utext kell, hogy ne escape-elje az aposztrófokat
     const labels = [ [(${chartLabels})] ];
     const dataPoints = [ [(${chartData})] ];
 
     const ctx = document.getElementById('myChart');
 
     new Chart(ctx, {
-        type: 'line', // Vonaldiagram [cite: 17]
+        type: 'line',
         data: {
-            labels: labels, // Dátumok
+            labels: labels,
             datasets: [{
                 label: 'Árfolyam',
-                data: dataPoints, // Értékek
+                data: dataPoints,
                 borderWidth: 2,
                 borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.1,
+                fill: true
             }]
         },
         options: {
-            scales: {
-                y: {
-                    beginAtZero: false // Ne 0-tól induljon, hogy jobban látszódjon a változás
-                }
-            }
+            scales: { y: { beginAtZero: false } }
         }
     });
     /*]]>*/

@@ -12,7 +12,8 @@
     </style>
 </head>
 <body>
-
+<div th:replace="~{nav :: navbar}"></div>
+<div class="main-content">
 <div class="container">
     <a href="/" class="back-link">← Vissza a főoldalra</a>
 
@@ -22,6 +23,6 @@
     <pre th:text="${accountInfo}">Betöltés...</pre>
 
 </div>
-
+</div>>
 </body>
 </html>

@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Java Beadandó</title>
 </head>
 <body>
+
+<div th:replace="~{nav :: navbar}"></div>
+
+<div class="main-content" style="text-align: center;">
+    <h1> Üdvözöllek a Java Beadandóban!</h1>
+    <p>Ez egy Spring Boot alapú webalkalmazás, amely képes:</p>
+
+    <ul style="text-align: left; display: inline-block;">
+        <li>MNB árfolyamokat lekérdezni és grafikont rajzolni (SOAP)</li>
+        <li>Kapcsolódni az Oanda Forex rendszeréhez (REST API)</li>
+        <li>Pozíciókat nyitni, zárni és listázni</li>
+    </ul>
+
+    <br><br>
+    <p>Készítette: <strong>Székely Attila</strong></p>
+    <p>Neptun kód: <strong>I8RXQL</strong></p>
+</div>
 
 </body>
 </html>

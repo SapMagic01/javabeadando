@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html lang="hu" xmlns:th="http://www.thymeleaf.org">
-<head><title>Nyitott Pozíciók</title></head>
-<body style="font-family: sans-serif; margin: 20px;">
-<a href="/">← Vissza</a>
-<h1>Nyitott Pozíciók</h1>
+<head>
+    <meta charset="UTF-8">
+    <title>Nyitott Pozíciók</title>
+</head>
+<body>
 
-<table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
-    <tr style="background-color: #f2f2f2;">
-        <th>Trade ID</th>
-        <th>Instrumentum</th>
-        <th>Mennyiség</th>
-        <th>Nyitó Ár</th>
-        <th>Nyitás Ideje</th>
-    </tr>
-    <tr th:each="pos : ${poziciok}">
-        <td th:text="${pos.id}">ID</td>
-        <td th:text="${pos.instrument}">EUR_USD</td>
-        <td th:text="${pos.units}">1000</td>
-        <td th:text="${pos.openPrice}">1.0500</td>
-        <td th:text="${pos.openTime}">2023...</td>
-    </tr>
-</table>
+<div th:replace="~{nav :: navbar}"></div>
 
-<p th:if="${poziciok.empty}">Nincs nyitott pozíció.</p>
+<div class="main-content">
+    <h1> Nyitott Pozícióim</h1>
+    <p>Itt látod az éppen aktív kereskedéseidet.</p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Trade ID</th>
+            <th>Instrumentum</th>
+            <th>Mennyiség</th>
+            <th>Nyitó Ár</th>
+            <th>Nyitás Ideje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pos : ${poziciok}">
+            <td th:text="${pos.id}">ID</td>
+            <td th:text="${pos.instrument}">EUR_USD</td>
+            <td th:text="${pos.units}">1000</td>
+            <td th:text="${pos.openPrice}">1.0500</td>
+            <td th:text="${pos.openTime}">2023...</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${poziciok.empty}" style="padding: 20px; text-align: center; color: #7f8c8d;">
+        <em>Jelenleg nincs nyitott pozíciód.</em>
+        <br><br>
+        <a href="/forex/nyit">Nyiss egyet itt!</a>
+    </div>
+</div>
+
 </body>
 </html>

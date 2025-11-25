@@ -2,39 +2,30 @@
 <html lang="hu" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Forex Aktuális Ár</title>
-    <style>
-        body { font-family: sans-serif; margin: 20px; }
-        .container { max-width: 600px; margin: 0 auto; }
-        .form-group { margin-bottom: 15px; }
-        select { padding: 5px; width: 200px; }
-        button { padding: 5px 15px; background-color: #28a745; color: white; border: none; cursor: pointer; }
-        pre { background-color: #f8f9fa; padding: 15px; border-radius: 5px; font-weight: bold; }
-        .back-link { display: block; margin-bottom: 20px; color: #007bff; }
-    </style>
+    <title>Aktuális Árfolyam</title>
 </head>
 <body>
 
-<div class="container">
-    <a href="/" class="back-link">← Vissza a főoldalra</a>
+<div th:replace="~{nav :: navbar}"></div>
 
-    <h1>Aktuális Árfolyam Lekérdezés</h1>
+<div class="main-content">
+    <h1> Aktuális Árfolyam Lekérdezés</h1>
 
     <form action="/forex/aktar" method="post">
         <div class="form-group">
-            <label for="instrument">Válassz Instrumentumot:</label>
+            <label for="instrument">Instrumentum:</label>
             <select name="instrument" id="instrument">
                 <option value="EUR_USD" th:selected="${selectedInstrument == 'EUR_USD'}">EUR / USD</option>
                 <option value="USD_JPY" th:selected="${selectedInstrument == 'USD_JPY'}">USD / JPY</option>
                 <option value="GBP_USD" th:selected="${selectedInstrument == 'GBP_USD'}">GBP / USD</option>
                 <option value="USD_CHF" th:selected="${selectedInstrument == 'USD_CHF'}">USD / CHF</option>
-                <option value="EUR_HUF" th:selected="${selectedInstrument == 'EUR_HUF'}">EUR / HUF</option>
+                <option value="USD_HUF" th:selected="${selectedInstrument == 'USD_HUF'}">USD / HUF</option>
             </select>
         </div>
-        <button type="submit">Árfolyam Lekérése</button>
+        <button type="submit">Lekérdezés</button>
     </form>
 
-    <div th:if="${arfolyamAdat != null}" style="margin-top: 20px;">
+    <div th:if="${arfolyamAdat != null}" style="margin-top: 30px;">
         <h3>Eredmény:</h3>
         <pre th:text="${arfolyamAdat}"></pre>
     </div>

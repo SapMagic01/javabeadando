@@ -1,22 +1,41 @@
 <!DOCTYPE html>
 <html lang="hu" xmlns:th="http://www.thymeleaf.org">
-<head><title>Pozíció Nyitás</title></head>
-<body style="font-family: sans-serif; margin: 20px;">
-<a href="/">← Vissza</a>
-<h1>Pozíció Nyitás</h1>
-<form action="/forex/nyit" method="post">
-    <label>Instrumentum:</label>
-    <select name="instrument">
-        <option value="EUR_USD">EUR/USD</option>
-        <option value="USD_HUF">USD/HUF</option>
-    </select><br><br>
+<head>
+    <meta charset="UTF-8">
+    <title>Pozíció Nyitás</title>
+</head>
+<body>
 
-    <label>Mennyiség (Egységek):</label>
-    <input type="number" name="units" value="100" required><br><br>
+<div th:replace="~{nav :: navbar}"></div>
 
-    <button type="submit" style="background-color: green; color: white; padding: 5px 15px;">Pozíció Nyitása</button>
-</form>
+<div class="main-content">
+    <h1> Új Pozíció Nyitása</h1>
 
-<pre th:if="${eredmeny}" th:text="${eredmeny}" style="background:#eee; padding:10px; margin-top:20px;"></pre>
+    <form action="/forex/nyit" method="post">
+        <div class="form-group">
+            <label>Instrumentum:</label>
+            <select name="instrument">
+                <option value="EUR_USD">EUR / USD</option>
+                <option value="USD_HUF">USD / HUF</option>
+                <option value="GBP_USD">GBP / USD</option>
+                <option value="USD_JPY">USD / JPY</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Mennyiség:</label>
+            <input type="number" name="units" value="1000" required placeholder="Pl. 1000 egység">
+        </div>
+
+        <button type="submit" style="background-color: #27ae60;">Vétel (Buy)</button>
+    </form>
+
+    <div th:if="${eredmeny}" style="margin-top: 30px;">
+        <h3>Tranzakció Eredménye:</h3>
+        <pre th:text="${eredmeny}"></pre>
+        <p><a href="/forex/poziciok">Ugrás a nyitott pozíciókhoz →</a></p>
+    </div>
+</div>
+
 </body>
 </html>

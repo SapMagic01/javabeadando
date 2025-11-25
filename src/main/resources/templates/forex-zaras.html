@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html lang="hu" xmlns:th="http://www.thymeleaf.org">
-<head><title>Pozíció Zárás</title></head>
-<body style="font-family: sans-serif; margin: 20px;">
-<a href="/">← Vissza</a>
-<h1>Pozíció Zárás</h1>
+<head>
+    <meta charset="UTF-8">
+    <title>Pozíció Zárás</title>
+</head>
+<body>
 
-<form action="/forex/zar" method="post">
-    <label>Trade ID (Azonosító):</label>
-    <input type="number" name="tradeId" placeholder="pl. 12345" required>
-    <button type="submit" style="background-color: red; color: white; padding: 5px 15px;">Zárás</button>
-</form>
+<div th:replace="~{nav :: navbar}"></div>
 
-<p><i>Tipp: A Trade ID-t a "Forex-Poz" menüben találod meg!</i></p>
+<div class="main-content">
+    <h1> Pozíció Lezárása</h1>
 
-<pre th:if="${eredmeny}" th:text="${eredmeny}" style="background:#eee; padding:10px; margin-top:20px;"></pre>
+    <form action="/forex/zar" method="post">
+        <div class="form-group">
+            <label>Trade ID:</label>
+            <input type="number" name="tradeId" placeholder="pl. 12345" required>
+        </div>
+        <button type="submit" style="background-color: #c0392b;">Zárás</button>
+    </form>
+
+    <p style="margin-top: 20px; color: #7f8c8d;">
+        <i>Tipp: A Trade ID-t a <a href="/forex/poziciok">Pozíciók</a> menüben találod meg!</i>
+    </p>
+
+    <div th:if="${eredmeny}" style="margin-top: 30px;">
+        <h3>Eredmény:</h3>
+        <pre th:text="${eredmeny}"></pre>
+    </div>
+</div>
+
 </body>
 </html>
